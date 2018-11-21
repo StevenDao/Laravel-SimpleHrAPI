@@ -25,4 +25,8 @@ class Employee extends Model
         'is_active',
         'hired_date',
     ];
+
+    public function position() {
+        return $this->hasOne(Position::class);
+    }
 }

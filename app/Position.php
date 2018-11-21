@@ -16,4 +16,8 @@ class Position extends Model
     public $fillable = [
         'title',
     ];
+
+    public function employee() {
+        return $this->belongsToMany(Employee::class);
+    }
 }

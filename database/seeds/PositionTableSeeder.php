@@ -3,7 +3,7 @@
 use App\Position;
 use Illuminate\Database\Seeder;
 
-class PositionsTableSeeder extends Seeder
+class PositionTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

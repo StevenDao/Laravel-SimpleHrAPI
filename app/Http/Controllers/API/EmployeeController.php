@@ -16,7 +16,10 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return Employee::get();
+        return [
+            'success' => true,
+            'data'    => Employee::get(),
+        ];
     }
 
     /**
@@ -68,7 +71,10 @@ class EmployeeController extends Controller
             ];
         }
 
-        return $employee;
+        return [
+            'success' => true,
+            'data'    => $employee,
+        ];
     }
 
     /**

@@ -26,7 +26,7 @@ class EmployeeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponseq
      */
     public function store(Request $request)
     {
@@ -117,6 +117,7 @@ class EmployeeController extends Controller
 
         return [
             'success' => $results,
+            'data'    => $employee,
         ];
     }
 
@@ -137,6 +138,7 @@ class EmployeeController extends Controller
             ];
         }
 
+        $employee->position->delete();
         $employee->delete();
         return [
             'success' => true,

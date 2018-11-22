@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Employee;
 use App\Http\Controllers\Controller;
+use App\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -37,6 +38,7 @@ class EmployeeController extends Controller
                 'last_name'  => 'required|string',
                 'salary'     => 'required|integer',
                 'hired_date' => 'required|date',
+                'title'      => 'string'
             ]
         );
 
@@ -47,8 +49,12 @@ class EmployeeController extends Controller
             ];
         }
 
-        $newEmployee = Employee::create($request->all());
-
+        $newEmployee = Employee::create($request->except('title'));
+        if (!empty($request->input('title'))) {
+            $position = new Position();
+            $position->title = $request->input('title');
+            $newEmployee->position()->save($position);
+        }
         return [
             'success' => true,
         ];
@@ -138,7 +144,10 @@ class EmployeeController extends Controller
             ];
         }
 
-        $employee->position->delete();
+        $position = $employee->position;
+        if ($position) {
+            $position->delete();
+        }
         $employee->delete();
         return [
             'success' => true,

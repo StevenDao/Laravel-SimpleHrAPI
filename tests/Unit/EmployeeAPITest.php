@@ -68,6 +68,7 @@ class EmployeeAPITest extends TestCase
                 'last_name'  => $this->faker->lastName,
                 'salary'     => $this->faker->randomDigit,
                 'hired_date' => $this->faker->date('Y-m-d h:i:s'),
+                'title'      => $this->faker->jobTitle,
             ];
 
         $response = $this->json('POST', self::ENDPOINT, $data);
@@ -95,6 +96,7 @@ class EmployeeAPITest extends TestCase
                 'last_name'  => ['INVALID'],
                 'salary'     => $this->faker->randomDigit,
                 'hired_date' => $this->faker->date('Y-m-d h:i:s'),
+                'title'      => $this->faker->jobTitle
             ];
 
         $response = $this->json('POST', self::ENDPOINT, $data);
@@ -122,6 +124,7 @@ class EmployeeAPITest extends TestCase
                 'last_name'  => $this->faker->lastName,
                 'salary'     => $this->faker->randomAscii,
                 'hired_date' => $this->faker->date('Y-m-d h:i:s'),
+                'title'      => $this->faker->jobTitle
             ];
 
         $response = $this->json('POST', self::ENDPOINT, $data);
@@ -149,6 +152,7 @@ class EmployeeAPITest extends TestCase
                 'last_name'  => $this->faker->lastName,
                 'salary'     => $this->faker->randomDigit,
                 'hired_date' => $this->faker->randomAscii,
+                'title'      => $this->faker->jobTitle
             ];
 
         $response = $this->json('POST', self::ENDPOINT, $data);
@@ -168,7 +172,29 @@ class EmployeeAPITest extends TestCase
      *
      * @return void
      */
-    public function testStoreValidDate()
+    public function testStoreMissingTitle()
+    {
+        $data =
+            [
+                'first_name' => $this->faker->firstName,
+                'last_name'  => $this->faker->lastName,
+                'salary'     => $this->faker->randomDigit,
+                'hired_date' => $this->faker->date('Y-m-d h:i:s')
+            ];
+
+        $response = $this->json('POST', self::ENDPOINT, $data);
+        $response
+            ->assertStatus(200)
+            ->assertJsonCount(1)
+            ->assertJsonStructure(self::JSON_SUCCESS)
+            ->assertJson(['success' => true,]);
+    }
+
+    /**
+     *
+     * @return void
+     */
+    public function testStoreValidInput()
     {
         $data =
             [
@@ -176,6 +202,7 @@ class EmployeeAPITest extends TestCase
                 'last_name'  => $this->faker->lastName,
                 'salary'     => $this->faker->randomDigit,
                 'hired_date' => $this->faker->date('Y-m-d h:i:s'),
+                'title'      => $this->faker->jobTitle
             ];
 
         $response = $this->json('POST', self::ENDPOINT, $data);

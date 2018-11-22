@@ -27,6 +27,28 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'first_name' => 'required|string',
+                'last_name'  => 'required|string',
+                'salary'     => 'required|integer',
+                'hired_date' => 'required|date',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return [
+                'success' => false,
+                'message' => $validator->errors(),
+            ];
+        }
+
+        $newEmployee = Employee::create($request->all());
+
+        return [
+            'success' => true,
+        ];
     }
 
     /**

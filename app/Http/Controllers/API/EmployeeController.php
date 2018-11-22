@@ -59,6 +59,16 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
+        $employee = Employee::find($id);
+
+        if (empty($employee)) {
+            return [
+                'success' => false,
+                'message' => "Cannot find employee with ID: $id",
+            ];
+        }
+
+        return $employee;
     }
 
     /**

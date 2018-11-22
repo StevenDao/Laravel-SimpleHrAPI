@@ -80,6 +80,38 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'first_name' => 'string',
+                'last_name'  => 'string',
+                'salary'     => 'integer',
+                'hired_date' => 'date',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return [
+                'success' => false,
+                'message' => $validator->errors(),
+            ];
+        }
+
+        $employee = Employee::find($id);
+
+        if (empty($employee)) {
+            return [
+                'success' => false,
+                'message' => "Cannot find employee with ID: $id",
+            ];
+        }
+
+        $employee->fill($request->all());
+        $results = $employee->save();
+
+        return [
+            'success' => $results,
+        ];
     }
 
     /**

@@ -15,8 +15,12 @@ class CreatePositionsTable extends Migration
     {
         Schema::create('positions', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('employee_id');
             $table->string('title');
             $table->timestamps();
+            $table->foreign('employee_id')
+                ->references('id')
+                ->on('employees');
         });
     }
 

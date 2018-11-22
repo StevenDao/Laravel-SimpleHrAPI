@@ -1,7 +1,6 @@
 <?php
 
 use App\Employee;
-use App\Position;
 use Faker\Generator as Faker;
 
 /*
@@ -19,12 +18,7 @@ const SALARY_MIN = 40000;
 const SALARY_MAX = 250000;
 
 $factory->define(Employee::class, function (Faker $faker) {
-    $positionIds = Position::get()
-        ->pluck('id')
-        ->toArray();
-
     return [
-        'position_id' => $faker->randomElement($positionIds),
         'first_name' => $faker->firstName,
         'last_name'  => $faker->lastName,
         'salary'     => $faker->numberBetween(SALARY_MIN, SALARY_MAX),

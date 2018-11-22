@@ -1,5 +1,6 @@
 <?php
 
+use App\Employee;
 use App\Position;
 use Faker\Generator as Faker;
 
@@ -15,7 +16,11 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(Position::class, function (Faker $faker) {
+    $employeeIds = Employee::get()
+        ->pluck('id')
+        ->toArray();
     return [
+        'employee_id' => $faker->randomElement($employeeIds),
         'title' => $faker->unique()->jobTitle,
     ];
 });

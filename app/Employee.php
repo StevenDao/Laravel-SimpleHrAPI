@@ -18,7 +18,6 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     public $fillable = [
-        'position_id',
         'first_name',
         'last_name',
         'salary',
